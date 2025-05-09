@@ -1,8 +1,6 @@
-# Neden Envanter Yönetimi IT'de Her Zaman Derttir?
+# Neden Envanter Yönetimi Her Zaman Derttir?
 
-Onlarca farklı virtualization ortamları, cloud migration ve microservices yapıları derken altyapı sürekli değişiyor. Bu da envanterin "güncel" kalmasını zorlaştırıyor. Eğer bir CMDB uygulamanız yoksa (olan da güncel kalamıyor nedense 😊) ya da ITSM süreçlerinizle bu takibi yapamıyorsanız, envanter işi adeta bir işkenceye dönüşebiliyor.
-
-Envanter önemli, ama güncel kalması daha da önemli.
+Onlarca virtualization ortamları, cloud migration ve microservices yapıları derken altyapı sürekli değişiyor. Bu da envanterin "güncel" kalmasını zorlaştırıyor. Eğer bir CMDB uygulamanız yoksa (olan da güncel kalamıyor nedense 😊) ya da ITSM süreçlerinizle bu takibi yapamıyorsanız, envanter ihtiyaç olduğunda adeta bir işkenceye dönüşebiliyor.
 
 Bu script, birden fazla VMware vCenter ortamına bağlanır, RVTools ile envanter verilerini dışa aktarır
 ve alınan Excel dosyalarını tek bir özet raporda birleştirir. Daha sonra belirtilen adrese mail olarak gönderir. En azından 10dk gibi bir sürede vSphere ortamlarnızdaki sunucularınız hakkında bilgi toplamış olacaksınız.
@@ -173,3 +171,7 @@ Exported files:
 - ./exports\rvtools_export.csv
 PS C:\Users\Desktop\rvtools_export
 ```
+
+
+Envanter önemli, ama güncel kalması daha da önemli. 
+Faydalı olması dileğiyle.

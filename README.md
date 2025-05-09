@@ -7,6 +7,7 @@ ve alınan Excel dosyalarını tek bir özet raporda birleştirir. Daha sonra be
 > RVTools, varsayılan olarak .ini dosyasında kullanıcı adı ve şifre bilgilerini düz metin olarak saklar. Bu durum, özellikle paylaşımlı sistemlerde veya otomatik çalışan script’lerde güvenlik açığı oluşturabilir. Dolayısı ile RVToolsPasswordEncryption kullanınız.
 > Not: Sadece iki VMware ortam için script kısaltıldı. Ne kadar ortamınız varsa script içerisinde kodu değiştirip kullanabilirsiniz.
 
+Windows "Schedule Task" veya Linux ortamlarda Cron oluşturup otomatize edebilirsiniz.  
 Faydalı olması dileğiyle.
 
 ```bash

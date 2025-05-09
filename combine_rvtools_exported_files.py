@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+
 print("Current Working Directory:", os.getcwd())
 
 input_dir = "./exports"
@@ -51,11 +52,18 @@ for file in files:
             else:
                 print(f"{file} has no matching columns in sheet '{sheet}'.")
 
-# If data is available, create the output file
+# If data is available, create the output files
 if all_data:
     final_df = pd.concat(all_data, ignore_index=True)
-    output_file = os.path.join(input_dir, "rvtools_export.xlsx")  
-    final_df.to_excel(output_file, index=False)
-    print(f"Exported file {output_file}")
+    
+    # Save as Excel
+    output_xlsx = os.path.join(input_dir, "rvtools_export.xlsx")
+    final_df.to_excel(output_xlsx, index=False)
+
+    # Save as CSV
+    output_csv = os.path.join(input_dir, "rvtools_export.csv")
+    final_df.to_csv(output_csv, index=False)
+
+    print(f"Exported files:\n- {output_xlsx}\n- {output_csv}")
 else:
     print("None of the files contained the desired columns.")

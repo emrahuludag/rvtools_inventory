@@ -1,9 +1,9 @@
-# Neden Envanter Yönetimi Her Zaman Derttir?
+# RVTools Report Script
 
-Onlarca virtualization ortamları, cloud migration ve microservices yapıları derken altyapı sürekli değişiyor. Bu da envanterin "güncel" kalmasını zorlaştırıyor. Eğer bir CMDB uygulamanız yoksa (olan da güncel kalamıyor nedense 😊) ya da ITSM süreçlerinizle bu takibi yapamıyorsanız, envanter ihtiyaç olduğunda adeta bir işkenceye dönüşebiliyor.
+Sunucularda çalışma yapanız lazım envanter gerekiyor, CMDB'niz yoksa (olanda güncel değil) çalışma yapmak işkenceye dönüşüyor.
 
 Bu script, birden fazla VMware vCenter ortamına bağlanır, RVTools ile envanter verilerini dışa aktarır
-ve alınan Excel dosyalarını tek bir özet raporda birleştirir. Daha sonra belirtilen adrese mail olarak gönderir. En azından 10dk gibi bir sürede vSphere ortamlarnızdaki sunucularınız hakkında bilgi toplamış olacaksınız.
+ve alınan Excel dosyalarını tek bir özet raporda birleştirir. Daha sonra belirtilen adrese mail olarak gönderir. En azından 10dk gibi bir sürede vSphere ortamlarnızdaki sunucularınız hakkında bilgi toplamış olacaksınız. Fiziksel sunucular hariç tabi ki..
 
 > Not: RVTools gibi envanter verisi toplayan araçlarla vCenter'a erişim sağlanırken "Read-Only" yetkili bir kullanıcı hesabı kullanılması kesinlikle tavsiye edilir.
 > RVTools, varsayılan olarak .ini dosyasında kullanıcı adı ve şifre bilgilerini düz metin olarak saklar. Bu durum, özellikle paylaşımlı sistemlerde veya otomatik çalışan script’lerde güvenlik açığı oluşturabilir. Dolayısı ile RVToolsPasswordEncryption kullanınız.
@@ -15,7 +15,7 @@ ve alınan Excel dosyalarını tek bir özet raporda birleştirir. Daha sonra be
  ./RVToolsPasswordEncryption.exe yourPassword
 ```
 
-# RVTools Report Script
+
 ```bash
 
 # =============================================================================================================

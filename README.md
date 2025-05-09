@@ -1,6 +1,6 @@
 # Neden Envanter Yönetimi IT'de Her Zaman Derttir?
 
-Onlarca farklı virtualization ortamları, cloud migration ve microservices yapıları derken altyapı sürekli değişiyor. Bu da envanterin "güncel" kalmasını zorlaştırıyor. Eğer bir CMDB uygulamanız yoksa (olan da güncel değil ki 😊) ya da ITSM süreçlerinizle bu takibi yapamıyorsanız, envanter işi adeta bir işkenceye dönüşebiliyor.
+Onlarca farklı virtualization ortamları, cloud migration ve microservices yapıları derken altyapı sürekli değişiyor. Bu da envanterin "güncel" kalmasını zorlaştırıyor. Eğer bir CMDB uygulamanız yoksa (olan da güncel kalamıyor nedense 😊) ya da ITSM süreçlerinizle bu takibi yapamıyorsanız, envanter işi adeta bir işkenceye dönüşebiliyor.
 
 Envanter önemli, ama güncel kalması daha da önemli.
 
@@ -17,47 +17,7 @@ ve alınan Excel dosyalarını tek bir özet raporda birleştirir. Daha sonra be
  ./RVToolsPasswordEncryption.exe yourPassword
 ```
 
-# OUTPUT
-
-```bash
-PS C:\Program Files (x86)\Robware\RVTools> C:\Users\euludag\Desktop\RVTools_script\rvtools_export_script.ps1
-Start export for vCenter A-site-vmwarename
--u username@vsphere.local -p XXXX -s 10.2.A-site-vmwarename.xlsx.100 -c ExportvInfo2xlsx -d C:\RVTools -f A-site-vmwarename.xlsx -DBColumnNames -ExcludeCustomAnnotations
-Start export for vCenter B-site-vmwarename
--u username@vsphere.local -p XXXXX -s B-site-vmwarename.xlsx -c ExportvInfo2xlsx -d C:\RVTools -f B-site-vmwarename.xlsx -DBColumnNames -ExcludeCustomAnnotations
-
-C:\Program Files (x86)\Robware\RVTools
-Check input C:\RVTools\\A-site-vmwarename.xlsx
-Ok
-Check input C:\RVTools\\B-site-vmwarename.xlsx
-Ok
-05:05:17 Copy C:\RVTools\\kzalavmmgmt.xlsx to C:\rvtools\Rvtools_merged.xlsx
-05:05:17 Open XLWorkbook C:\rvtools\Rvtools_merged.xlsx
-05:05:18 Open XLWorkbook C:\RVTools\\A-site-vmwarename.xlsx
-05:05:18 Merge XLWorkbooks
-05:05:18 Processing worksheet vInfo from C:\RVTools\\B-site-vmwarename.xlsx
-05:05:18 Processing worksheet vMetaData from C:\RVTools\\B-site-vmwarename.xlsx
-05:05:18 Dispose XLWorkbook C:\RVTools\\B-site-vmwarename.xlsx
-
-Mail send to: emrahuludag@gmail.com
-RVToolsSendMail: Terminated normally.
-Mail send to: emrahuludag@gmail.com
-RVToolsSendMail: Terminated normally.
-
-PS C:\Program Files (x86)\Robware\RVTools> 
-```
-
-
-Tüm envanteri topladık ama bu sefer de şu dert çıktı:
-“Keşke sadece istediğimiz alanlar olsun içinde.”
-
-İşte tam burada, aşağıdaki Python script'i devreye giriyor.
-RVTools’tan alınmış birden fazla Excel dosyasını aynı klasöre atıp bu script’i çalıştırıyorsunuz.
-
-Script, sadece belirttiğiniz alanları filtreleyerek tüm verileri birleştiriyor ve size temiz, sade ve odaklanmış bir dosya sunuyor.
-
-Böylece envanterden “işe yarayan” veriye hızlıca ulaşabiliyorsunuz.
-
+# RVTools Report Script
 ```bash
 
 # =============================================================================================================
@@ -166,6 +126,42 @@ $inputFiles = "$XlsxDir\$XlsxFile1;$XlsxDir\$XlsxFile2"
 ```
 
 # OUTPUT
+
+```bash
+PS C:\Program Files (x86)\Robware\RVTools> C:\Users\euludag\Desktop\RVTools_script\rvtools_export_script.ps1
+Start export for vCenter A-site-vmwarename
+-u username@vsphere.local -p XXXX -s 10.2.A-site-vmwarename.xlsx.100 -c ExportvInfo2xlsx -d C:\RVTools -f A-site-vmwarename.xlsx -DBColumnNames -ExcludeCustomAnnotations
+Start export for vCenter B-site-vmwarename
+-u username@vsphere.local -p XXXXX -s B-site-vmwarename.xlsx -c ExportvInfo2xlsx -d C:\RVTools -f B-site-vmwarename.xlsx -DBColumnNames -ExcludeCustomAnnotations
+
+C:\Program Files (x86)\Robware\RVTools
+Check input C:\RVTools\\A-site-vmwarename.xlsx
+Ok
+Check input C:\RVTools\\B-site-vmwarename.xlsx
+Ok
+05:05:17 Copy C:\RVTools\\kzalavmmgmt.xlsx to C:\rvtools\Rvtools_merged.xlsx
+05:05:17 Open XLWorkbook C:\rvtools\Rvtools_merged.xlsx
+05:05:18 Open XLWorkbook C:\RVTools\\A-site-vmwarename.xlsx
+05:05:18 Merge XLWorkbooks
+05:05:18 Processing worksheet vInfo from C:\RVTools\\B-site-vmwarename.xlsx
+05:05:18 Processing worksheet vMetaData from C:\RVTools\\B-site-vmwarename.xlsx
+05:05:18 Dispose XLWorkbook C:\RVTools\\B-site-vmwarename.xlsx
+
+Mail send to: emrahuludag@gmail.com
+RVToolsSendMail: Terminated normally.
+Mail send to: emrahuludag@gmail.com
+RVToolsSendMail: Terminated normally.
+
+PS C:\Program Files (x86)\Robware\RVTools> 
+```
+
+
+Tüm envanteri topladık ama istediğimiz alanlar olsun sadece isterseniz;
+RVTools’tan alınmış birden fazla Excel dosyasını aynı klasöre atıp bu script’i çalıştırıyorsunuz.
+
+Script, sadece belirttiğiniz alanları filtreleyerek tüm verileri birleştiriyor ve size temiz, sade ve odaklanmış bir dosya sunuyor.
+
+Böylece envanterden “işe yarayan” veriye hızlıca ulaşabilirsiniz.
 
 ```bash
 PS C:\Users\Desktop\rvtools_export> & C:/Users/Desktop//.venv/Scripts/python.exe "c:/Users/Desktop/rvtools_export/combine_files copy.py"

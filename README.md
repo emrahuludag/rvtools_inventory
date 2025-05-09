@@ -1,23 +1,20 @@
 # RVTools Report Script
 
-Sunucularda çalışma yapanız lazım envanter gerekiyor, CMDB'niz yoksa (olanda güncel değil) çalışma yapmak işkenceye dönüşüyor.
-
 Bu script, birden fazla VMware vCenter ortamına bağlanır, RVTools ile envanter verilerini dışa aktarır
-ve alınan Excel dosyalarını tek bir özet raporda birleştirir. Daha sonra belirtilen adrese mail olarak gönderir. En azından 10dk gibi bir sürede vSphere ortamlarnızdaki sunucularınız hakkında bilgi toplamış olacaksınız. Fiziksel sunucular hariç tabi ki..
+ve alınan Excel dosyalarını tek bir özet raporda birleştirir. Daha sonra belirtilen adrese mail olarak gönderir.
 
-> Not: RVTools gibi envanter verisi toplayan araçlarla vCenter'a erişim sağlanırken "Read-Only" yetkili bir kullanıcı hesabı kullanılması kesinlikle tavsiye edilir.
+> Not: RVTools gibi envanter datası toplayan araçlarla vCenter'a erişim sağlanırken "Read-Only" yetkili bir kullanıcı hesabı kullanılması kesinlikle tavsiye edilir.
 > RVTools, varsayılan olarak .ini dosyasında kullanıcı adı ve şifre bilgilerini düz metin olarak saklar. Bu durum, özellikle paylaşımlı sistemlerde veya otomatik çalışan script’lerde güvenlik açığı oluşturabilir. Dolayısı ile RVToolsPasswordEncryption kullanınız.
-> Not: Sadece ili vmware ortam için script kısaltıldı. 10-20 adet ne kadar ortamınız varsa script içerisinde kodu değiştirip kullanabilirsiniz.
+> Not: Sadece iki VMware ortam için script kısaltıldı. Ne kadar ortamınız varsa script içerisinde kodu değiştirip kullanabilirsiniz.
 
+Faydalı olması dileğiyle.
 
 ```bash
  cd C:\Program Files (x86)\Robware\RVTools\ 
  ./RVToolsPasswordEncryption.exe yourPassword
 ```
 
-
 ```bash
-
 # =============================================================================================================
 # Script:    RVTools_Report.ps1
 # Date:      July, 2024
@@ -29,7 +26,6 @@ This script connects to multiple VMware vCenter environments, collects virtual m
 and exports the data to Excel files. The resulting files are then optionally merged and summarized using pandas,
 filtered by selected columns, and saved to a structured output directory. Final reports can be sent via email
 to designated recipients.
-	
 #>
 
 [string] $RVToolsPath = "C:\Program Files (x86)\Robware\RVTools"
@@ -161,6 +157,74 @@ Script, sadece belirttiğiniz alanları filtreleyerek tüm verileri birleştiriy
 
 Böylece envanterden “işe yarayan” veriye hızlıca ulaşabilirsiniz.
 
+
+#
+
+```bash
+import pandas as pd
+import os
+print("Current Working Directory:", os.getcwd())
+
+input_dir = "./exports"
+
+# Create the directory if it doesn't exist
+if not os.path.exists(input_dir):
+    os.makedirs(input_dir)
+    print(f"Created folder: {input_dir}")
+
+# List all .xlsx files in the current directory
+files = [f for f in os.listdir('.') if f.endswith('.xlsx')]
+
+all_data = []
+
+# Define the columns we want to extract
+wanted_columns = {
+    "vInfo": [
+        "vInfoVMName",     
+        "vInfoPowerstate",           
+        "vInfoGuestHostName",            
+        "vInfoPrimaryIPAddress",     
+        "vInfoNetwork1",   
+        "vInfoOS",            
+        "vInfoOSTools",      
+        "vInfoVISDKServer",        
+        "vInfoDataCenter",             
+        "vInfoCluster"      
+    ]
+}
+
+# Process each file
+for file in files:
+    print(f"Processing {file}")
+    xl = pd.ExcelFile(file)
+    
+    for sheet, columns in wanted_columns.items():
+        if sheet in xl.sheet_names:
+            df = xl.parse(sheet)
+            available_columns = [col for col in columns if col in df.columns]
+            
+            missing_columns = set(columns) - set(available_columns)
+            if missing_columns:
+                print(f"Alert: {file} is missing columns: {missing_columns}")
+            
+            if available_columns:
+                df_filtered = df[available_columns].copy()
+                df_filtered["source_file"] = file
+                all_data.append(df_filtered)
+            else:
+                print(f"{file} has no matching columns in sheet '{sheet}'.")
+
+# If data is available, create the output file
+if all_data:
+    final_df = pd.concat(all_data, ignore_index=True)
+    output_file = os.path.join(input_dir, "rvtools_export.xlsx")  
+    final_df.to_excel(output_file, index=False)
+    print(f"Exported file {output_file}")
+else:
+    print("None of the files contained the desired columns.")
+```
+
+# OUTPUT
 ```bash
 PS C:\Users\Desktop\rvtools_export> & C:/Users/Desktop//.venv/Scripts/python.exe "c:/Users/Desktop/rvtools_export/combine_files copy.py"
 Current Working Directory: C:\Users\Desktop\rvtools_export
@@ -171,7 +235,3 @@ Exported files:
 - ./exports\rvtools_export.csv
 PS C:\Users\Desktop\rvtools_export
 ```
-
-
-Envanter önemli, ama güncel kalması daha da önemli. 
-Faydalı olması dileğiyle.

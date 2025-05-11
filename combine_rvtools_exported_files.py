@@ -21,13 +21,21 @@ wanted_columns = {
         "vInfoVMName",     
         "vInfoPowerstate",           
         "vInfoGuestHostName",            
-        "vInfoPrimaryIPAddress",     
+        "vInfoPrimaryIPAddress",
+        "vInfoOSTools",
         "vInfoNetwork1",   
-        "vInfoOS",            
-        "vInfoOSTools",      
-        "vInfoVISDKServer",        
+        "vInfoCPUs",
+        "vInfoMemory",
+        "vInfoTotalDiskCapacityMiB",
+        "vInfo_tags_Team",
+        "vInfo_tags_Department",
+        "vInfo_tags_Prod-Dev-Test",
+        "vInfo_tags_BackupFrequency",
+        "vInfoHost",
         "vInfoDataCenter",             
-        "vInfoCluster"      
+        "vInfoCluster",
+        "vInfoVISDKServer",        
+        "vInfoVISDKServerType"                      
     ]
 }
 
